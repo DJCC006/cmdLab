@@ -18,7 +18,6 @@ import java.util.Date;
 public class comandos {
     
     private static File currentDir;
-    private File rootDir=logica.getRoot();
     
     static public void cmCd(String cd, File ruta){
         ruta = new File(cd);
@@ -156,11 +155,14 @@ public class comandos {
             return content;
         }
     }
+
+    public static void setCurrentDir(File currentDir) {
+        comandos.currentDir = currentDir;
+    }
+    
+    public static File getCurrentDir() {
+        return currentDir;
+    }
     
     
-    
-     
-     
-    
-   
 }

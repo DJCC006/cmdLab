@@ -125,6 +125,9 @@ public class logica extends comandos {
    public static File getRoot(){
        return root;
    }
-    
+   
+   public static String getPrompt() {
+       return comandos.getCurrentDir().getAbsolutePath();
+   }
     
 }
