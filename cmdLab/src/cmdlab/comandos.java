@@ -1,0 +1,129 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package cmdlab;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+/**
+ *
+ * @author David
+ */
+public class comandos {
+    
+    
+    static public void cmCd(String cd, File ruta){
+        ruta = new File(cd);
+    }
+    
+    
+    
+ 
+    
+    
+     static public boolean cmMfile(String nombre, File f) throws IOException{
+         String rutaPath = System.getProperty("user.dir");
+         
+         f = new File(rutaPath +File.separator + nombre);//seteo de ruta en base al nombre del nuevo archivo
+         
+         if(f.exists()){
+             System.out.println("El archivo ya existe");
+             return false;
+         }else{
+             System.out.println("El archivo se ha creado con exito");
+             return f.createNewFile();
+         }
+     }
+     
+     
+     static public boolean cmMkdir(String nombre, File f){
+         //seteo de ruta
+         String rutaPath = System.getProperty("user.dir");
+         f = new File(rutaPath +File.separator + nombre);         
+         
+         if(f.exists()){
+             System.out.println("El Directorio ya existe");
+             return false;
+         }else{
+             System.out.println("Se ha creado el directorio de manera exitosa");
+             return f.mkdirs();
+         }
+     }
+     
+     
+     
+     static void cmRm(String nombre, File f){
+         //seteo de ruta
+         String rutaPath = System.getProperty("user.dir");
+         f = new File(rutaPath +File.separator + nombre);
+         
+         if(f.isDirectory()){
+             if(!f.exists()){
+                 System.out.println("Este directorio no EXISTE");
+             }else{
+                 RmAux(f);
+                 System.out.println("El directorio se ha eliminado con exito");
+             }
+         }
+         
+          System.out.println("El archivo se ha eliminado con exito");
+          f.delete();
+     }
+     
+     static private boolean RmAux(File f){
+        
+        if(f.isDirectory()){
+            for(File arc:f.listFiles()){
+                RmAux(arc);
+            }
+        }
+        return f.delete();
+    }
+     
+     
+     
+     static public void cmReturn(File f){
+         String padrePath= f.getParent();
+         f = new File(padrePath);
+         System.out.println("Regresando a "+f.getName());
+     }
+     
+    static public String cmDate(){
+        Calendar hoy = Calendar.getInstance();
+        String formatoFecha = "dd/MM/yyyy";
+        SimpleDateFormat formater = new SimpleDateFormat(formatoFecha);
+        String fFormateada = formater.format(hoy.getTime());
+        System.out.println("Fecha formateada: "+fFormateada);
+        return fFormateada;
+    }
+    
+    static public String cmTime(){
+        Calendar hoy = Calendar.getInstance();
+        int hora= hoy.get(Calendar.HOUR_OF_DAY);
+        int minuto = hoy.get(Calendar.MINUTE);
+        String day="";
+        
+        if(hora<12){
+            day="AM";
+        }else if(hora>=12){
+            day="PM";
+        }
+        
+        
+        String time = String.format("%02d:&02d", hora, minuto);
+        time+=" "+day;
+        System.out.println("Hora actual: "+time);
+        return time;   
+    }
+    
+    
+    
+     
+     
+    
+    
+}
