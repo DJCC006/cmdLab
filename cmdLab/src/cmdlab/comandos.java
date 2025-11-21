@@ -4,10 +4,14 @@
  */
 package cmdlab;
 
+import java.awt.List;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -25,11 +29,6 @@ public class comandos {
         currentDir=ruta;
         System.out.println("Ruta cambiada a "+cd);
     }
-    
-    
-    
- 
-    
     
      static public boolean cmMfile(String nombre, File f) throws IOException{
          //String rutaPath = System.getProperty("user.dir");
@@ -59,8 +58,6 @@ public class comandos {
              return f.mkdirs();
          }
      }
-     
-     
      
      static void cmRm(String nombre, File f){
          //seteo de ruta
@@ -157,7 +154,16 @@ public class comandos {
         }
     }
     
-    
+    static public String cmLeer(String nombre) throws IOException{
+        File temp= new File(currentDir, nombre);
+        String content = new String(Files.readAllBytes(temp.toPath()));
+        String fullContent ="";
+        fullContent+=("====="+temp.getName()+"=====\n");
+        fullContent+=content;
+        fullContent+="==========";
+        return fullContent; 
+    }
+            
     
      
      
