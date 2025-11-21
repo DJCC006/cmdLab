@@ -16,6 +16,7 @@ public class CmdVisual extends JFrame {
     
     private JTextArea Consola;
     private JTextField Input;
+    private logica Logica;
     
     public CmdVisual() {
         setTitle("Command Prompt");
@@ -60,7 +61,7 @@ public class CmdVisual extends JFrame {
         //El texto que se mira cada que se abre el cmd
         Consola.append("Microsoft Windows [Version 10.0.19045.6466]\n");
         Consola.append("(c) Patito Corporation. Todos los derechos reservados.\n\n");
-//        MostrarPrompt();
+        MostrarPrompt();
         
 
         //Aqui se mira lo de la tecla ENTER para poder ejecutar los comandos
@@ -103,7 +104,7 @@ public class CmdVisual extends JFrame {
             } else if (cmd.equals("cls")) {
                 Consola.setText("");
             } else {
-//                Consola.append(Logica.ejecutar(comando));
+//                Consola.append(logica.processCommand());
             }
         } catch (Exception e) {
             Consola.append("Error: " + e.getMessage() + "\n");
