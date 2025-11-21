@@ -7,9 +7,11 @@ package cmdlab;
 import java.awt.List;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -166,7 +168,12 @@ public class comandos {
         return fullContent; 
     }
             
-    
+    static public boolean cmEscribir (String nombre, String content) throws IOException{
+        File temp= new File(currentDir, nombre);
+        Path p = Paths.get(temp.getPath());
+        Files.writeString(p, content, StandardCharsets.UTF_8);
+        return true;
+    }
      
      
 

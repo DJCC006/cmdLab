@@ -141,6 +141,23 @@ public class logica extends comandos {
                
             }
             
+           if(comando.equals("Escribir")){
+               String[] partes2 = command.split(" ",3);
+               String comando2 = partes2[0];
+               String content= partes2[2];
+               
+               try{
+                  if(comandos.cmEscribir(comando2, content)){
+                      return "TEXTO ESCRITO EXITOSAMENTE";
+                  }else{
+                      return "NO SE PUDO ESCRIBIR EL TEXTO";
+                  }
+               }catch(IOException e){
+                   
+               }
+               
+               
+           }
            
             return ("Comando Invalido "+comando);
             
