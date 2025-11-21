@@ -11,6 +11,7 @@ package cmdlab;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 public class CmdVisual extends JFrame {
     
@@ -23,6 +24,8 @@ public class CmdVisual extends JFrame {
         setSize(900, 500);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
+        
+        comandos.setCurrentDir(new File(System.getProperty("user.home") + "\\Documents\\NetBeansProjects>"));
         
         //Barrita azul de arriba asi como se mira en la imagen toda tumbada
         JPanel BarraAzul = new JPanel();
@@ -73,7 +76,7 @@ public class CmdVisual extends JFrame {
             Consola.append(comando + "\n");
             
             //Llamado a la logica
-            String respuesta = "fenjdfjbkfa"; //logica.processCommand(comando); //Arreglar en un segundito
+            String respuesta = logica.processCommand(comando);
             
             //Mostrar la respuesta en el cmd
             if (respuesta != null && !respuesta.isEmpty()) {
