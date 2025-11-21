@@ -57,57 +57,37 @@ public class CmdVisual extends JFrame {
         Input.setCaretColor(Color.WHITE);
         Input.setFont(new Font("Consolas", Font.PLAIN, 14));
         
+        add(Input, BorderLayout.SOUTH);
+        
         //El texto que se mira cada que se abre el cmd
         Consola.append("Microsoft Windows [Version 10.0.19045.6466]\n");
         Consola.append("(c) Patito Corporation. Todos los derechos reservados.\n\n");
-//        MostrarPrompt();
+        MostrarPrompt();
         
 
         //Aqui se mira lo de la tecla ENTER para poder ejecutar los comandos
         Input.addActionListener(e -> {
             String comando = Input.getText().trim();
             
-            if (!comando.isEmpty()) {
-                Consola.append(comando + "\n");
-                
-                ManejarComando(comando);
+            Input.setText("");
+            Consola.append(comando + "\n");
+            
+            //Llamado a la logica
+            String respuesta = "fenjdfjbkfa"; //logica.processCommand(comando); //Arreglar en un segundito
+            
+            //Mostrar la respuesta en el cmd
+            if (respuesta != null && !respuesta.isEmpty()) {
+                Consola.append(respuesta + "\n");
             }
             
-            Input.setText("");
             MostrarPrompt();
         });
     }
     
     private void MostrarPrompt() {
-//        Consola.append(Logica.getPrompt());
+        Consola.append(logica.getPrompt());
 
         Consola.setCaretPosition(Consola.getDocument().getLength());
-    }
-    
-    private void ManejarComando(String comando) {
-        String[] partes = comando.split("\\s+", 2); //Segun google esto significa, "para uno o mas caracteres de espacio en blanco"
-        
-        String cmd = partes[0].toLowerCase();
-        String argumento = (partes.length > 1) ? partes[1].trim() : "";
-        
-        try {
-            //Pa los comando especiales de WR y RD ya que estos piden texto
-            if (cmd.equals("WR") || cmd.equals("escribir")) {
-                String texto = JOptionPane.showInputDialog(this, "Texto a escribir en " + argumento + ":", "Escribir archivo", JOptionPane.PLAIN_MESSAGE);
-                
-                if (texto != null) {
-//                    Consola.append(Logica.writetoFile(argumento, texto));
-                }
-            } else if (cmd.equals("RD") || cmd.equals("leer")) {
-//                Consola.append(Logica.readFile(argumento));
-            } else if (cmd.equals("cls")) {
-                Consola.setText("");
-            } else {
-//                Consola.append(Logica.ejecutar(comando));
-            }
-        } catch (Exception e) {
-            Consola.append("Error: " + e.getMessage() + "\n");
-        }
     }
     
     public static void main(String[] args) {
