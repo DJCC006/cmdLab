@@ -78,6 +78,7 @@ public class logica extends comandos {
         
                 
             }
+            
             if(comando.equals("Rm")){
                   
                 if(partes.length<2 || partes[1].isEmpty()){
@@ -89,7 +90,7 @@ public class logica extends comandos {
                 if(comandos.cmRm(argumentoR, ruta)){
                     return "Se elimino ["+argumentoR+"] Exitosamente";
                 }else{
-                    return "NO SE PUDO ELIMINAR EL ARCHIVO";
+                    return "NO SE PUDO ELIMINAR ["+argumentoR+"]";
                 }
                 
             }
@@ -123,8 +124,21 @@ public class logica extends comandos {
             }
             if(comando.equals("Time")){
                  return  comandos.cmTime();
+            }
+            
+            
+            if(comando.equals("Leer")){
+                if(partes.length<2 || partes[1].isEmpty()){
+                    return("Estructura incorrecta");
+                }
+
+                String argumentocd = partes[1].trim();
+                try{
+                     return comandos.cmLeer(argumentocd);
+                }catch(IOException e){
+                    
+                }
                
-                
             }
             
            
