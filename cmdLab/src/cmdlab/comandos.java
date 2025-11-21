@@ -23,10 +23,10 @@ public class comandos {
     
     private static File currentDir;
     
-    static public void cmCd(String cd, File ruta){
+    static public String cmCd(String cd, File ruta){
         ruta = new File(cd);
         currentDir=ruta;
-        System.out.println("Ruta cambiada a "+cd);
+        return ("Ruta cambiada a "+cd);
     }
     
      static public boolean cmMfile(String nombre, File f) throws IOException{
@@ -50,15 +50,13 @@ public class comandos {
          f = new File(currentDir, nombre);         
          
          if(f.exists()){
-             System.out.println("El Directorio ya existe");
              return false;
          }else{
-             System.out.println("Se ha creado el directorio de manera exitosa");
              return f.mkdirs();
          }
      }
      
-     static void cmRm(String nombre, File f){
+     static boolean cmRm(String nombre, File f){
          //seteo de ruta
          //String rutaPath = System.getProperty("user.dir");
          f = new File(currentDir, nombre);
@@ -73,7 +71,7 @@ public class comandos {
          }
          
           System.out.println("El archivo se ha eliminado con exito");
-          f.delete();
+          return f.delete();
      }
      
      static private boolean RmAux(File f){
@@ -88,13 +86,13 @@ public class comandos {
      
      
      
-     static public void cmReturn() throws IOException{
+     static public String cmReturn() throws IOException{
         File padre = currentDir.getCanonicalFile().getParentFile();
         if(padre== null){
-            System.out.println("Ya se encuentra en la raiz");
+            return ("Ya se encuentra en la raiz");
         }
-         System.out.println("Regresando a "+padre.getName());
          currentDir=padre;
+          return ("Regresando a "+padre.getName());
      }
      
     static public String cmDate(){

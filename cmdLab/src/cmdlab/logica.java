@@ -32,7 +32,7 @@ public class logica extends comandos {
     }
     
     
-    public static void processCommand(String command){
+    public static String processCommand(String command){
          
             String[] partes = command.split(" ",2);//probar que el espacio sirva como separador de comando
             String comando= partes[0];
@@ -41,85 +41,83 @@ public class logica extends comandos {
                 
                 case "Mkdir":
                     if(partes.length<2 || partes[1].isEmpty()){
-                        System.out.println("Estructura incorrecta");
-                        return;
+                        return "Estructura Incorrecta";
                     }
                     
                     String argumento = partes[1].trim();
                     
-                    comandos.cmMkdir(argumento, ruta);
+                    if(comandos.cmMkdir(argumento, ruta)){
+                        return "Directorio ["+argumento+"] creado Exitosamente";
+                    }else{
+                        return "NO SE PUDO CREAR DIRECTORIO";
+                    }
                     
-                    break;
+                    
                 
                     
                 case "Mfile":
                     if(partes.length<2 || partes[1].isEmpty()){
-                        System.out.println("Estructura incorrecta");
-                        return;
+                       return ("Estructura incorrecta");
+                       
                     }
                     
                     String argumentof = partes[1].trim();
                     
                     try{
-                        comandos.cmMfile(argumentof, ruta);
+                        if(comandos.cmMfile(argumentof, ruta)){
+                            return "Archivo ["+argumentof+"] creado Exitosamente";
+                        }else{
+                            return "NO SE PUDO CREAR ARCHIVO";
+                        }
                     }catch(IOException e){
                         e.printStackTrace();
                     }
-                    
-                    break;
+        
                     
                     
                 case "Rm":
                     
                     if(partes.length<2 || partes[1].isEmpty()){
-                        System.out.println("Estructura incorrecta");
-                        return;
+                        return ("Estructura incorrecta");
                     }
                     
                     String argumentoR = partes[1].trim();
                     
-                    comandos.cmRm(argumentoR, ruta);
+                    if(comandos.cmRm(argumentoR, ruta)){
+                        return "Se elimino ["+argumentoR+"] Exitosamente";
+                    }else{
+                        return "NO SE PUDO ELIMINAR EL ARCHIVO";
+                    }
                     
-                    break;
+                    
                 
                 case "Cd":
                       if(partes.length<2 || partes[1].isEmpty()){
-                        System.out.println("Estructura incorrecta");
-                        return;
+                        return("Estructura incorrecta");
                     }
                     
                     String argumentocd = partes[1].trim();
+                    return comandos.cmCd(argumentocd, ruta);
                     
-                    comandos.cmCd(argumentocd, ruta);
-                    
-                    break;
                     
                 case "...":
                     try{
-                        comandos.cmReturn();
+                       return comandos.cmReturn();
                     }catch(IOException e2){
-                        System.out.println("Error al volver");
+                        return ("Error al volver");
                     }
-                    break;
-                
+            
                 case "Dir":
-                    comandos.cmDir();
-                    break;
+                    return comandos.cmDir();
                     
                 case "Date":
-                    comandos.cmDate();
-                    break;
-                    
+                    return comandos.cmDate();      
                 case "Time":
-                    comandos.cmTime();
-                    break;
-                    
+                    return  comandos.cmTime();
                     
                 default:
-                    System.out.println("Comando Invalido "+comando);
+                    return ("Comando Invalido "+comando);
             }
-        
-      
     }
     
    public static File getRoot(){
