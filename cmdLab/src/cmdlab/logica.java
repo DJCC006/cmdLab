@@ -5,28 +5,125 @@
 package cmdlab;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
 
 /**
  *
  * @author David
  */
-public class logica {
+public class logica extends comandos {
     private static File ruta;
-    private String input;
+    private static String input;
+    private static File root;
     
-    
-    
-    public void processCommand(String command){
-        input= command.trim();
-        
-        String[] partes = input.split("\\s+",2);//probar que el espacio sirva como separador de comando
-        String comando= partes[0].toLowerCase();
+    public static void main(String[] args) {
+         Scanner lea = new Scanner(System.in);
+        lea.useDelimiter("\n");
         
         
-            
-        
-        
+        boolean control = true;
+        while(control){
+            System.out.print("COMAND LINE>");
+            input = lea.next().trim();
+            processCommand();
+        }
+          
     }
+    
+    
+    public static void processCommand(){
+         
+            String[] partes = input.split(" ",2);//probar que el espacio sirva como separador de comando
+            String comando= partes[0];
             
+            switch(comando){
+                
+                case "Mkdir":
+                    if(partes.length<2 || partes[1].isEmpty()){
+                        System.out.println("Estructura incorrecta");
+                        return;
+                    }
+                    
+                    String argumento = partes[1].trim();
+                    
+                    comandos.cmMkdir(argumento, ruta);
+                    
+                    break;
+                
+                    
+                case "Mfile":
+                    if(partes.length<2 || partes[1].isEmpty()){
+                        System.out.println("Estructura incorrecta");
+                        return;
+                    }
+                    
+                    String argumentof = partes[1].trim();
+                    
+                    try{
+                        comandos.cmMfile(argumentof, ruta);
+                    }catch(IOException e){
+                        e.printStackTrace();
+                    }
+                    
+                    break;
+                    
+                    
+                case "Rm":
+                    
+                    if(partes.length<2 || partes[1].isEmpty()){
+                        System.out.println("Estructura incorrecta");
+                        return;
+                    }
+                    
+                    String argumentoR = partes[1].trim();
+                    
+                    comandos.cmRm(argumentoR, ruta);
+                    
+                    break;
+                
+                case "Cd":
+                      if(partes.length<2 || partes[1].isEmpty()){
+                        System.out.println("Estructura incorrecta");
+                        return;
+                    }
+                    
+                    String argumentocd = partes[1].trim();
+                    
+                    comandos.cmCd(argumentocd, ruta);
+                    
+                    break;
+                    
+                case "...":
+                    try{
+                        comandos.cmReturn();
+                    }catch(IOException e2){
+                        System.out.println("Error al volver");
+                    }
+                    break;
+                
+                case "Dir":
+                    break;
+                    
+                case "Date":
+                    comandos.cmDate();
+                    break;
+                    
+                case "Time":
+                    comandos.cmTime();
+                    break;
+                    
+                    
+                default:
+                    System.out.println("Comando Invalido "+comando);
+            }
+        
+      
+    }
+    
+   public static File getRoot(){
+       return root;
+   }
+    
     
 }

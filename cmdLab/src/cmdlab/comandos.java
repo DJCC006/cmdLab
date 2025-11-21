@@ -6,6 +6,7 @@ package cmdlab;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -15,9 +16,13 @@ import java.util.Calendar;
  */
 public class comandos {
     
+    private static File currentDir;
+    private File rootDir=logica.getRoot();
     
     static public void cmCd(String cd, File ruta){
         ruta = new File(cd);
+        currentDir=ruta;
+        System.out.println("Ruta cambiada a "+cd);
     }
     
     
@@ -26,24 +31,24 @@ public class comandos {
     
     
      static public boolean cmMfile(String nombre, File f) throws IOException{
-         String rutaPath = System.getProperty("user.dir");
+         //String rutaPath = System.getProperty("user.dir");
          
-         f = new File(rutaPath +File.separator + nombre);//seteo de ruta en base al nombre del nuevo archivo
+         File newArch = new File(currentDir,nombre);//seteo de ruta en base al nombre del nuevo archivo
          
-         if(f.exists()){
+         if(newArch.exists()){
              System.out.println("El archivo ya existe");
              return false;
          }else{
              System.out.println("El archivo se ha creado con exito");
-             return f.createNewFile();
+             return newArch.createNewFile();
          }
      }
      
      
      static public boolean cmMkdir(String nombre, File f){
          //seteo de ruta
-         String rutaPath = System.getProperty("user.dir");
-         f = new File(rutaPath +File.separator + nombre);         
+         //String rutaPath = System.getProperty("user.dir");
+         f = new File(currentDir, nombre);         
          
          if(f.exists()){
              System.out.println("El Directorio ya existe");
@@ -58,8 +63,8 @@ public class comandos {
      
      static void cmRm(String nombre, File f){
          //seteo de ruta
-         String rutaPath = System.getProperty("user.dir");
-         f = new File(rutaPath +File.separator + nombre);
+         //String rutaPath = System.getProperty("user.dir");
+         f = new File(currentDir, nombre);
          
          if(f.isDirectory()){
              if(!f.exists()){
@@ -86,10 +91,13 @@ public class comandos {
      
      
      
-     static public void cmReturn(File f){
-         String padrePath= f.getParent();
-         f = new File(padrePath);
-         System.out.println("Regresando a "+f.getName());
+     static public void cmReturn() throws IOException{
+        File padre = currentDir.getCanonicalFile().getParentFile();
+        if(padre== null){
+            System.out.println("Ya se encuentra en la raiz");
+        }
+         System.out.println("Regresando a "+padre.getName());
+         currentDir=padre;
      }
      
     static public String cmDate(){
@@ -114,7 +122,7 @@ public class comandos {
         }
         
         
-        String time = String.format("%02d:&02d", hora, minuto);
+        String time = String.format("%02d:%02d", hora, minuto);
         time+=" "+day;
         System.out.println("Hora actual: "+time);
         return time;   
