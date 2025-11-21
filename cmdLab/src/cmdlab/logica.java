@@ -26,15 +26,15 @@ public class logica extends comandos {
         while(control){
             System.out.print("COMAND LINE>");
             input = lea.next().trim();
-            processCommand();
+            processCommand(input);
         }
           
     }
     
     
-    public static void processCommand(){
+    public static void processCommand(String command){
          
-            String[] partes = input.split(" ",2);//probar que el espacio sirva como separador de comando
+            String[] partes = command.split(" ",2);//probar que el espacio sirva como separador de comando
             String comando= partes[0];
             
             switch(comando){
@@ -103,6 +103,7 @@ public class logica extends comandos {
                     break;
                 
                 case "Dir":
+                    comandos.cmDir();
                     break;
                     
                 case "Date":

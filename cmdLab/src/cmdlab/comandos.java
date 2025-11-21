@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
@@ -126,6 +127,34 @@ public class comandos {
         time+=" "+day;
         System.out.println("Hora actual: "+time);
         return time;   
+    }
+    
+    
+    static public String cmDir(){
+        if(currentDir.isDirectory()){
+            String content="";
+             content+=("Folder: "+currentDir.getName()+"\n");
+           
+             
+             for(File child: currentDir.listFiles()){
+                 content+=(new Date(child.lastModified()));
+                 if(child.isDirectory()){
+                     content+=(" \t<DIR>\t ");
+                 }
+                 if(child.isFile()){
+                     content+=( "\t    \t" );
+                     content+= (child.length());
+                 }
+                 content+=( "\t"+child.getName()+"\n");
+             }
+             
+             System.out.println(content);
+             return content;
+        }else{
+            String content="";
+            content+=" Accion no permitida";
+            return content;
+        }
     }
     
     
